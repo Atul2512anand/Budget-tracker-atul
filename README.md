@@ -71,7 +71,7 @@ The production assets are written to `dist/`. Deploy that folder to any static h
 | Command | Description |
 |---|---|
 | `npm run dev` | Start the Vite development server |
-| `npm run build` | Type-check and build for production |
+| `npm run build` | Build for production |
 | `npm run build:dev` | Build in development mode |
 | `npm run preview` | Preview the production build |
 | `npm run lint` | Run ESLint |
