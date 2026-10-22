@@ -1,73 +1,145 @@
-# Welcome to your Lovable project
+# Budget Tracker
 
-## Project info
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?logo=tailwindcss&logoColor=white)
 
-**URL**: https://lovable.dev/projects/931db2e7-5f9d-4c19-a89d-bbdccedd4fae
+A client-side personal-finance dashboard for recording income and expenses, setting category budgets, visualising spending, and reviewing transaction history. All data stays in the browser.
 
-## How can I edit this code?
+## Overview
 
-There are several ways of editing your application.
+Budget Tracker is a React + TypeScript single-page application built with Vite. It is intentionally backend-free: transactions, budgets, and the selected currency are persisted in `localStorage`, so the app works offline after the first load and can be hosted as a static site.
 
-**Use Lovable**
+## Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/931db2e7-5f9d-4c19-a89d-bbdccedd4fae) and start prompting.
+- Summary cards for total balance, total income, and total expenses
+- Add income or expense transactions with amount, category, and description
+- Nine expense categories (food, transport, shopping, bills, health, education, travel, entertainment, other)
+- Per-category monthly budgets with progress bars and over-budget warnings
+- Budget creation, editing by category, and deletion
+- Transaction history with text search and category/type filters
+- Delete individual transactions
+- Expense-by-category pie chart
+- Six-month spending-trend bar chart
+- Currency selector with multiple currency symbols
+- Toast notifications for validation and budget warnings
+- Responsive shadcn/ui + Tailwind layout
+- Data persistence through a reusable `useLocalStorage` hook
 
-Changes made via Lovable will be committed automatically to this repo.
+## Tech Stack
 
-**Use your preferred IDE**
+| Area | Technology |
+|---|---|
+| UI | React 18.3, TypeScript 5.5, Vite 5.4 |
+| Styling | Tailwind CSS 3.4, shadcn/ui-style Radix components |
+| Charts | Recharts 2.12 |
+| Icons | lucide-react |
+| Forms and validation | react-hook-form, Zod |
+| Persistence | Browser `localStorage` |
+| Linting | ESLint 9 with TypeScript ESLint |
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Getting Started
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Prerequisites
 
-Follow these steps:
+- Node.js 18+
+- npm (a Bun lockfile is also present, but the documented scripts use npm)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Install and Run
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+git clone https://github.com/Atul2512anand/Budget-tracker-atul.git
+cd Budget-tracker-atul
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Open the URL printed by Vite (usually http://localhost:5173).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Build for Production
 
-**Use GitHub Codespaces**
+```bash
+npm run build
+npm run preview
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The production assets are written to `dist/`. Deploy that folder to any static host.
 
-## What technologies are used for this project?
+### Available Scripts
 
-This project is built with:
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the Vite development server |
+| `npm run build` | Type-check and build for production |
+| `npm run build:dev` | Build in development mode |
+| `npm run preview` | Preview the production build |
+| `npm run lint` | Run ESLint |
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Usage
 
-## How can I deploy this project?
+1. Open the **Add Expense** tab and choose **Income** or **Expense**.
+2. Enter an amount, pick a category, add a short description, and submit.
+3. Open **Budgets** to set a monthly limit for a category.
+4. Use **Dashboard** to see the balance cards, category pie chart, monthly trend, and budget progress.
+5. Use **History** to search, filter, or delete transactions.
+6. Switch the display currency from the selector in the header.
 
-Simply open [Lovable](https://lovable.dev/projects/931db2e7-5f9d-4c19-a89d-bbdccedd4fae) and click on Share -> Publish.
+### Data Storage
 
-## Can I connect a custom domain to my Lovable project?
+The app writes to these browser storage keys:
 
-Yes, you can!
+- `transactions` — income and expense records
+- `budgets` — category budgets and their accumulated `spent` value
+- `currency` — the selected display currency
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Clearing site data, using private browsing, or switching browsers will remove or hide the data. There is no account, sync, or backup.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Project Structure
+
+```text
+Budget-tracker-atul/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── BudgetManager.tsx
+│   │   ├── CurrencySelector.tsx
+│   │   ├── ExpenseTracker.tsx
+│   │   ├── SpendingChart.tsx
+│   │   ├── TransactionHistory.tsx
+│   │   └── ui/                 # shadcn/Radix primitives
+│   ├── contexts/
+│   │   └── CurrencyContext.tsx
+│   ├── hooks/
+│   │   ├── useLocalStorage.ts
+│   │   ├── use-toast.ts
+│   │   └── use-mobile.tsx
+│   ├── lib/
+│   ├── pages/
+│   │   └── Index.tsx           # Dashboard and state owner
+│   ├── App.tsx
+│   └── main.tsx
+├── index.html
+├── package.json
+├── tailwind.config.ts
+└── vite.config.ts
+```
+
+## Notes and Limitations
+
+- **Client-side only:** there is no authentication, server, or cloud sync. Data is per browser profile.
+- **Currency display only:** changing the currency changes the symbol; amounts are not converted using exchange rates.
+- **Budget totals are incremental:** adding an expense increases the matching budget's `spent` value, but deleting a transaction does not subtract it again. Creating a budget after expenses already exist starts its `spent` value at zero.
+- **Transaction date:** new transactions are dated with the current day; there is no date picker or back-dating.
+- The app is a single-user dashboard and does not separate accounts or months.
+- No automated tests are included.
+
+## License
+
+No `LICENSE` file is included. The project is shared for educational and portfolio purposes; add a licence before redistributing it.
+
+## Author
+
+**Atul Anand**  
+B.Tech–M.Tech (Cyber Security), National Forensic Sciences University  
+GitHub: [@Atul2512anand](https://github.com/Atul2512anand)
